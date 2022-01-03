@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<script>
+    function myFunction()
+      {
+        var name = document.forms["myForm"]["fname"].value;
+        if(name=="Mari")
+        {
+          window.location.href="Table1.html";
+        }
+        else{
+          alert("Invalid name");
+        }
+      }
+</script>
+<body bgcolor="pink">
+    <div class="div1">
+        <form name="myForm" method="post">
+          <label>Employee name:</label>
+          <input type="text" name="fname" class="inputText" placeholder="Enter name"><br><br>
+          <button type="submit" value="Submit" onclick="myFunction()">submit</button>
+          <button type="reset" value="Reset">Reset</button>
+        </form>
+      </div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Details</title>
+    </head>
+    <body>
+        <div class="modal-body">
+            <form action="{{ url_for('insert') }}" method="POST">
+                <div class="form-group">
+                    <label>ID:</label>
+                    <input type="number" class="form-control" name="id" required="1"><br>
+                    <label>Name:</label>
+                    <input type="text" placeholder="name" class="form-control" name="name" required="1"> <br>
+                </div>
+                <div class="form-group">
+
+
+                    <label>Age:</label>
+                    <input type="text" class="form-control" name="age" placeholder="age" required="1"><br>
+  
+                        
+                 </div>
+                 <div class="form-group">
+                    <label>salary:</label>
+                    <input type="text" class="form-control" name="salary" placeholder="salary" required="1">
+                 </div><br>
+  
+                 <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Insert Data</button><br>
+                 </div>
+  
+            </form>
+        </div>
+
+        
+        </div>
+
+        <div class="modal-body">
+            <form action="{{ url_for('update') }}" method="POST">
+                <div class="form-group"><br>
+                    <label>ID:</label>
+                    <input type="number" class="form-control" name="id" required="1"><br>
+                    <label>Name:</label>
+                    <input type="text" placeholder="name" class="form-control" name="name" required="1"> <br>
+                </div>
+                <div class="form-group">
+
+
+                    <label>Age:</label>
+                    <input type="text" class="form-control" name="age" placeholder="age" required="1"><br>
+  
+                        
+                 </div>
+                 <div class="form-group">
+                    <label>salary:</label>
+                    <input type="text" class="form-control" name="salary" placeholder="salary" required="1">
+                 </div><br>
+  
+                 <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Update Data</button>
+                 </div>
+  
+            </form>
+        </div>
+
+        <div class="section">
+            
+            <h2>All details</h2>
+            <table border="1">
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>age</th>
+                    <th>salary</th>
+                </tr>
+                {% for row in employee %}
+                <tr>
+                    <td>{{ row.0 }}</td>
+                    <td>{{ row.1 }}</td>
+                    <td>{{ row.2 }}</td>
+                    <td>{{ row.3 }}</td>
+                    <td>
+                        <a href="/delete/{{row[0]}}" class="btn btn-danger btn-delete btn-sm">delete</a>
+                    </td>
+                  
+                </tr>
+                
+                {% endfor %}
+            </table>
+            
+
+        </div>
+        
+           
+
+        </form>
+        
+    </body>
+</html>

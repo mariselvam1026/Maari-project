@@ -1,0 +1,26 @@
+{% extends 'firstapp/base2.html' %}
+{% block content %}
+{% if error %}
+{{ error }}
+<br/>
+<br/>
+{% endif %}<div class="rest">
+<h1>Login</h1>
+
+<form class="gg"method = "POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    username:
+    <br/>
+    <input type="text" name="username"/><br/>
+    Password:<br/>
+    <input type="password" name="password" /><br/>
+    <input class ="btn btn-primary" type="submit" value= "Login"/>
+    <br/>
+
+</form></div>
+{% endblock content %}
+
+
+
+
+

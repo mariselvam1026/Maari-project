@@ -1,0 +1,54 @@
+{% extends 'firstapp/base2.html' %}
+{% block content %}
+
+<!-- <div class="rest"> -->
+
+  <div class="container">
+        <div class="row">
+          <!-- <div class="col-md-4 col-md-offset-6"></div> -->
+          <div class="col-md-12 card mb-9  mt-5 left  top">
+              <div class="card-body">
+                
+
+                <h1>Login to My_Blog</h1><hr>
+
+  <form class="gg"method = "POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="username" class="form-label">User name</label>
+      <input type="text" class="form-control" id="username" aria-describedby="username" name="username">
+      <div id="username" class="form-text">Never share your username with anyone else.</div>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input type="password" class="form-control" id="password" name="password">
+    </div>
+
+    <!-- <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div> -->
+
+    {% if error %}
+{{ error }}
+<br/>
+<br/>
+{% endif %}
+    <button type="submit" class="btn btn-primary">Login</button>
+
+    <a href="/password_reset">Forget password</a>
+</form>
+
+</div></div></div></div></div>
+
+ 
+
+
+
+</div>
+{% endblock content %}
+
+
+
+
+

@@ -1,0 +1,16 @@
+<html>
+    {% extends 'demoapp/base.html' %}
+    {%block content %}
+    <div class="container">
+    <h1>New Employee details</h1>
+    <form method = "POST">
+        <div class="rest">
+        {{form.as_p}}
+        {% csrf_token %}
+        <button class="button button3">Add New</button></a>
+    </form>
+    
+    {% endblock %}
+    </div>
+</div>
+</html>

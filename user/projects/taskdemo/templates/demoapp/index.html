@@ -1,0 +1,28 @@
+<html>
+    {% extends 'demoapp/base.html' %}
+    {%block content %}
+    <div class="container">
+
+    <h1> EMPLOYEE DETAILS</h1>
+    <table>
+        <thead>
+            <th>EMP.NAME</th>
+            <th>AGE</th>
+            <th>SALARY</th>
+            <th>MODIFY</th>
+        </thead>
+        <tr>
+            {% for emp in employee %}
+            <td>{{emp.name}}</td>
+            <td>{{emp.age}}</td>
+            <td>{{emp.salary}}</td>
+            <td><a href="/delete/{{emp.id}}"><img
+                src="https://qph.fs.quoracdn.net/main-qimg-83c6de25ed91d13a4f09fb5f11ca8853" height="30px" width="30px"></a> <a href="/update/{{emp.id}}"><img src="https://www.2g-eng.com/wp-content/uploads/2016/01/design-engineering-icon-small.png" height="30px" width="30px"></a></td>
+        </tr>
+        {% endfor %}
+
+    </table><br>
+    <a href ='/create'> <button class="button button3">Add New</button></a>
+    {% endblock %}
+</div>
+</html>

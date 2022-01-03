@@ -1,0 +1,61 @@
+{% extends 'firstapp/base2.html' %}
+{% block content %}
+{% if error %}
+{{ error }}
+<br />
+<br />
+{% endif %}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 card mb-4  mt-5 left  top">
+            <div class="card-body">
+                <h1>Sign-up!</h1><hr>
+                <form method="POST" action="{% url 'register' %}">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label">User name</label>
+                        <input type="text" class="form-control" id="username" aria-describedby="username"
+                            name="username">
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="password1" class="form-label">Password</label>
+                        <input type="password1" class="form-control" id="password" name="password1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password2" class="form-label">Confirm password</label>
+                        <input type="password2" class="form-control" id="password" name="password2">
+                    </div>
+
+                    {% if error %}
+                    {{ error }}
+                    <br />
+                    <br />
+                    {% endif %}
+
+
+                    <button type="submit" class="btn btn-primary">Signup</button>
+                </form>
+
+
+
+
+
+
+
+                <!-- <br/>
+    <input type="text" name="username"/><br/>
+    Password:<br/>
+    <input type="password" name="password1"/><br/>
+    confirm Password:<br/>
+    <input type="password" name="password2"/><br/>
+    <input class ="btn btn-primary" type="submit" value= "signup"/><br/>
+</form> -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

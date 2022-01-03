@@ -1,0 +1,166 @@
+{% extends 'firstapp/base.html' %} {% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+        <h1>{% block title %} <h2 style="font-family:Comic sans MS;">{{ post.title }} </h2>{% endblock title %}</h1>
+        <p class=" text-muted">Author {{ post.author }} | created_on {{ post.created_on }}</p><hr>
+        <p class="card-text ">{{ post.content | safe }}</p>
+        <a href="{% url 'send_gmail' post.id %}"><button type="submit" class="btn btn-success">Share
+            &LongRightArrow;</button></a>
+        <!--         
+   <br><br>
+        {{ request.build_absolute_uri	}}  
+        {{post.id}}
+    
+        
+         -->
+      </div>
+    </div>
+
+    {% block sidebar %} {% include 'firstapp/sidebar.html' %} {% endblock sidebar %}
+  </div>
+</div>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+
+        <h2 style="font-family:Comic sans MS;">Add a new comment</h2>
+        <hr>
+        <form action="." method="post">
+          {{ comment_form.as_p }}
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary ">Submit</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+
+        <!-- Comment with nested comments -->
+        {% for comment in comments %}
+        <!-- Rajaaaaaaaaa{{comment.id}} -->
+        <div class="comment">
+          <strong> {{ comment.name }} </strong>| {{ comment.created }}
+          <br> comment - <strong> {{ comment.body }}<br><br></strong>
+
+          <button class="btn btn-warning" onclick="openForm('{{comment.name}}')">View comments</button><br><br>
+          <div class="form-popup" id='{{comment.name}}'>
+
+
+            <!-- <a href="{% url 'pageview' post.id %}"><button type="button" class="btn btn-success">Comments</button><br><br></a> -->
+            <form action="." method="post">
+              {{ comment_form.as_p }}
+              {% csrf_token %}
+              <!-- Hidden input for parent comment.id -->
+              <input type="hidden" name="parent_id" value="{{ comment.id }}">
+              <input class="btn btn-success" type="submit" value="Reply">
+              <hr>
+
+            </form>
+            <div>
+
+
+
+              {% for replay in comment.replies.all %}
+              <!-- mariiiii   {{comment.replies.all}} -->
+              <!-- rammmmmmm   {{ replay.id}} -->
+              <strong>{{ replay.name }}</strong> | {{ replay.created }}
+              <br>Replies | <strong>{{ replay.body }}</strong></li><br><br>
+              <button class="btn btn-warning" onclick="openForm('{{replay.name}}')">View comments</button><br><br>
+              <div class="form-popup" id='{{replay.name}}'>
+
+
+                <!-- <button type="submit" class="btn btn-primary">Add reply</button> -->
+                <form action="." method="post">
+                  {{ comment_form.as_p }}
+                  {% csrf_token %}
+                  <input type="hidden" name="parent_id" value="{{ replay.id }}">
+                  <input class="btn btn-success" type="submit" value="Add_Reply">
+                  <hr>
+                </form>
+
+
+
+
+
+                {% for reply in replay.replies.all %}
+
+                <strong>{{ reply.name }}</strong> | {{ reply.created }}
+                <br>Replies | <strong>{{ reply.body }}</strong></li><br><br>
+                <hr>
+                {% endfor %}
+
+
+                <button type="button" class="btn btn-link" onclick="closeForm('{{replay.name}}')">Close</button>
+                <script>
+                  function closeForm(val) {
+                    console.log("close", val);
+                    document.getElementById(val).style.display = "none";
+
+                  }
+                  function openForm(val) {
+                    console.log("open", val);
+                    document.getElementById(val).style.display = "block";
+
+                  }
+                </script>
+
+
+                <hr>
+
+
+                {% endfor %}
+              </div>
+            </div>
+            <button type="button" class="btn btn-link" onclick="closeForm('{{comment.name}}')">Close</button>
+
+
+
+            <hr>
+
+            <script>
+              function closeForm(val) {
+                console.log("close", val);
+                document.getElementById(val).style.display = "none";
+
+              }
+              function openForm(val) {
+                console.log("open", val);
+                document.getElementById(val).style.display = "block";
+
+              }
+            </script>
+
+
+
+            {% endfor %}
+
+
+
+
+
+            <hr>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {% endblock content %}

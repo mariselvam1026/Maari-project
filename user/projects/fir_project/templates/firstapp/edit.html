@@ -1,0 +1,359 @@
+<!-- 
+def add_comment(request, pk=None):
+print('slug',pk)
+print("request =",request)
+#template_name = 'firstapp/post_detail.html'
+post = get_object_or_404(Post, pk=pk)
+print('post:',post)
+comments = post.comments.filter(active=True)
+try:
+    print('comments:',comments)
+except Exception as e:
+    print("error=",e)
+
+new_comment = None
+print('hello')
+print("method =",request.method)
+if request.method == 'POST':
+    print('hello')
+    comment_form = CommentForm(request.POST)
+    print("comment_form = ", comment_form)
+    if comment_form.is_valid():
+        
+        try:
+            new_comment = comment_form.save(commit=False)
+            new_comment.post = post
+            new_comment.save()
+        except Exception as e:
+            print("error = ",e)
+        #return redirect('firstapp/post_detail.html', pk=post.pk)
+        return redirect('add_comment', pk=post.pk)           
+       
+    
+else:
+    print('hello')
+    #template_name = 'firstapp/com.html'
+    comment_form = CommentForm()
+    print('Hiii')
+    #return render(request, template_name , {'comment_form': comment_form, 'new_comment': new_comment})
+
+print('Ans:',comments)
+reply_form = ReplyForm()
+
+return render(request, 'firstapp/post_detail.html' , {'comments': comments,'post':post,'comment_form': comment_form,'new_comment': new_comment, 'reply_form':reply_form})
+
+
+
+
+
+def reply_comment(request,id,pk):
+print('pk=',pk)
+print('Rammmm')
+# print('aaaaa',request.POST)
+comment = get_object_or_404(Comment,pk=pk)
+print('commentttt',comment)
+print("Post =", comment.post)
+
+# print("method111 =", request.method)
+if request.method == 'POST':
+    
+    reply_form = ReplyForm(request.POST)
+    print("replyyyyyy",reply_form)
+
+    if reply_form.is_valid():
+        
+        try:
+        
+            print("Hiiiiiiiiii333333",reply_form)
+            reply = reply_form.save(commit=False)
+            print("reply=33333",reply)
+            print("Hllllooooooo")
+            reply.post = comment.post
+            #reply.author = request.user
+            
+            reply.save()
+            comment_reply = Comment.objects.create(
+                post = comment.post,
+                name = reply.name,
+                body = reply.body
+            )
+            print("Comment created = ", comment_reply)
+            print("Hlooooo")
+            #print('pk =',comment.pk, reply.post.pk)
+        except Exception as e:
+            print("error = ",e)
+        return redirect(f'/post/{comment.post.pk}/comment/add')
+        #return redirect(f'/post/{comment.post.pk}/comment/{comment.pk}/reply')
+        #return redirect('reply_comment',pk=comment.pk)
+else:
+    reply_form = ReplyForm()
+    print("Maariii")
+print('ReplyForm')
+return render(request, 'firstapp/post_detail.html', {'reply_form':reply_form})
+ -->
+
+<!-- 
+ path('post/<int:pk>/comment/add', add_comment , name ='add_comment'),
+ path('post/<int:id>/comment/<int:pk>/reply', reply_comment, name='reply_comment'),
+     -->
+
+
+
+     
+     <h3>Add a comment</h3>
+     <form method="post">
+
+       {{ comment_form.as_p }}
+       {% csrf_token %}
+
+       <button type="submit" class="btn btn-primary ">Submit</button>
+     </form>
+
+   </div>
+ </div>
+</div>
+</div>
+<div class="container">
+<div class="row">
+ <div class="col-md-8 card mb-4  mt-3 left  top">
+   <div class="card-body">
+     <strong>
+       <h2>{{ comments.count }} Comments...</h2>
+     </strong>
+     <a href="{% url 'add_comment' pk=post.pk %}">View comment</a><br>
+     {% for comment in comments %}
+     <br>
+     <strong> {{ comment.name }} | {{ comment.created }} </strong>
+     <br> comment - <strong> {{ comment.body }}<br><br></strong>
+
+
+     {% for reply in comment.replies.all %}
+
+     <p><strong>{{ reply.name }} | {{ reply.created }}</strong></p>
+     <p>Comment - {{ reply.body }}</p><br>
+     <hr>
+     {% endfor %}
+
+
+     <!-- <a href="{% url 'reply_comment' post.pk comment.pk %}">
+       <button type="submit" class="btn btn-secondary  btn-sm">Reply</button></a> -->
+     <div class="row">
+       <div class="col" id="{{ comment.pk }}">
+
+         <form action="/post/{{post.pk}}/comment/{{comment.pk}}/reply" method="post">
+           <form method="post">
+           
+           <!-- <input type="hidden" name="parent_id" value="{{ comment.id }}">
+         <input class="btn btn-primary" type="submit" value="Reply"> -->
+           {{ comment_form.as_p }}
+           {% csrf_token %}
+
+           <input class="btn btn-success" type="submit" value="Reply">
+         </form>
+       </div>
+     </div>
+     <br><br />
+     <hr>
+     {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+     {% extends 'firstapp/base.html' %} {% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+        <h1>{% block title %} {{ post.title }} {% endblock title %}</h1>
+        <p class=" text-muted">Author {{ post.author }} | created_on {{ post.created_on }}</p>
+        <p class="card-text ">{{ post.content | safe }}</p>
+        <a href="{% url 'send_gmail' post.id %}"><button type="submit" class="btn btn-success">Share
+            &LongRightArrow;</button></a>
+        <!--         
+   <br><br>
+        {{ request.build_absolute_uri	}}  
+        {{post.id}}
+    
+        
+         -->
+      </div>
+    </div>
+
+    {% block sidebar %} {% include 'firstapp/sidebar.html' %} {% endblock sidebar %}
+  </div>
+</div>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+
+        <h2 style="font-family:'Timew new roman'">Add comments</h2>
+        <hr>
+        <form action="." method="post">
+          {{ comment_form.as_p }}
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary ">Submit</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+
+        <h1 style="font-family:'Timew new roman'">First level comments</h1>
+        <hr>
+
+        <!-- Comment with nested comments -->
+        {% for comment in comments %}
+        <!-- Rajaaaaaaaaa{{comment.id}} -->
+        <div class="comment">
+          <strong> {{ comment.name }} </strong>| {{ comment.created }}
+          <br> comment - <strong> {{ comment.body }}<br><br></strong>
+
+          <button class="btn btn-warning" onclick="openForm('{{comment.name}}')">View comments</button><br><br>
+          <div class="form-popup" id='{{comment.name}}'>
+
+
+            <!-- <a href="{% url 'pageview' post.id %}"><button type="button" class="btn btn-success">Comments</button><br><br></a> -->
+            <form action="." method="post">
+              {{ comment_form.as_p }}
+              {% csrf_token %}
+              <!-- Hidden input for parent comment.id -->
+              <input type="hidden" name="parent_id" value="{{ comment.id }}">
+              <input class="btn btn-success" type="submit" value="Reply">
+              <hr>
+
+            </form>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 card mb-4  mt-3 left  top">
+              <div class="card-body">
+
+
+                <h2 style="font-family:'Timew new roman'">Second level comments</h2>
+                <hr>
+                {% for replay in comment.replies.all %}
+                <!-- mariiiii   {{comment.replies.all}} -->
+                <!-- rammmmmmm   {{ replay.id}} -->
+                <strong>{{ replay.name }}</strong> | {{ replay.created }}
+                <br>Replies | <strong>{{ replay.body }}</strong></li><br><br>
+                <button class="btn btn-warning" onclick="openForm('{{replay.name}}')">View comments</button><br><br>
+                <div class="form-popup" id='{{replay.name}}'>
+
+
+                  <!-- <button type="submit" class="btn btn-primary">Add reply</button> -->
+                  <form action="." method="post">
+                    {{ comment_form.as_p }}
+                    {% csrf_token %}
+                    <input type="hidden" name="parent_id" value="{{ replay.id }}">
+                    <input class="btn btn-success" type="submit" value="Add_Reply">
+                    <hr>
+                    <button type="button" class="btn btn-link" onclick="closeForm('{{replay.name}}')">Close</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 card mb-4  mt-3 left  top">
+              <div class="card-body">
+
+                <h2 style="font-family:'Timew new roman'">Third level comments</h2>
+                <hr>
+                {% for reply in replay.replies.all %}
+
+                <strong>{{ reply.name }}</strong> | {{ reply.created }}
+                <br>Replies | <strong>{{ reply.body }}</strong></li><br><br>
+                <hr>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <script>
+          function closeForm(val) {
+            console.log("close", val);
+            document.getElementById(val).style.display = "none";
+
+          }
+          function openForm(val) {
+            console.log("open", val);
+            document.getElementById(val).style.display = "block";
+
+          }
+        </script>
+
+
+        <hr>
+
+
+        {% endfor %}
+
+        <button type="button" class="btn btn-link" onclick="closeForm('{{comment.name}}')">Close</button>
+
+
+
+        <hr>
+
+        <script>
+          function closeForm(val) {
+            console.log("close", val);
+            document.getElementById(val).style.display = "none";
+
+          }
+          function openForm(val) {
+            console.log("open", val);
+            document.getElementById(val).style.display = "block";
+
+          }
+        </script>
+
+
+
+        {% endfor %}
+
+
+
+
+
+        <hr>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock content %}

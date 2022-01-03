@@ -1,0 +1,43 @@
+{% extends 'firstapp/base.html' %}
+
+
+<html>
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 card mb-4  mt-3 left  top">
+            <div class="card-body">
+                <!-- {{ comments.count }} Comments -->
+                {% for comment in comments %}
+                <!-- <div class="comment">
+                    <strong> {{ comment.name }} </strong>| {{ comment.created }}
+                    <br> comment - <strong> {{ comment.body }}<br><br></strong> -->
+                    
+                <hr>
+                {% for replay in comment.replies.all %}
+                <strong>{{ replay.name }}</strong> | {{ replay.created }}
+                <br>Comment | <strong>{{ replay.body }}</strong></li>
+                <hr>
+                {% endfor %}
+                <form action="." method="post">
+                    {{ comment_form.as_p }}
+                    {% csrf_token %}
+                    <!-- Hidden input for parent comment.id -->
+                    <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                    <input class="btn btn-success" type="submit" value="Reply">
+                    <hr>
+
+                </form>
+                {% empty %}
+                <h4>There are no comments yet.</h4>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+</html>

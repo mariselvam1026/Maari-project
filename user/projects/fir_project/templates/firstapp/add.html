@@ -1,0 +1,23 @@
+{% extends 'firstapp/base.html' %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 card mb-4  mt-3 left  top">
+      <div class="card-body">
+
+
+        <h1 style="font-family:Comic sans MS;">Add post to the Blog</h1><hr>
+
+        <form action="{% url 'new_post' %}" method="POST">
+          {% csrf_token %}
+          {{ form.media }}
+          {{ form.as_p }}
+          <button class="btn btn-success">Post</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%endblock%}

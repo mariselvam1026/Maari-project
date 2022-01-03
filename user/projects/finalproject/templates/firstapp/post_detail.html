@@ -1,0 +1,81 @@
+{% extends 'firstapp/base.html' %} {% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+        <h1>{% block title %} {{ post.title }} {% endblock title %}</h1>
+        <p class=" text-muted">Author {{ post.author }} | created_on {{ post.created_on }}</p>
+        <p class="card-text ">{{ post.content | safe }}</p>
+      </div>
+    </div>
+
+    {% block sidebar %} {% include 'firstapp/sidebar.html' %} {% endblock sidebar %}
+  </div>
+</div>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+
+        <h3>Add a comment</h3>
+        <form method="post">
+
+          {{ comment_form.as_p }}
+          {% csrf_token %}
+
+          <button type="submit" class="btn btn-primary ">Submit</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+        <strong>
+          <h2>{{ comments.count }} Comments...</h2>
+        </strong>
+        <a href="{% url 'add_comment' pk=post.pk %}">View comment</a><br>
+        {% for comment in comments %}
+        <br>
+        <strong> {{ comment.name }} | {{ comment.created }} </strong>
+       <br> comment - <strong> {{ comment.body }}<br><br></strong>
+
+       
+
+        {% for reply in comment.replies.all %}
+        
+        <p><strong>{{ reply.name }} | {{ reply.created }}</strong></p>
+        <p>Comment - {{ reply.body }}</p><br>
+        <hr>
+        {% endfor %}
+
+
+        <!-- <a href="{% url 'reply_comment' post.pk comment.pk %}"><button type="submit" class="btn btn-secondary  btn-sm">Reply</button></a> -->
+        <div class="row" >
+          <div class="col" id="{{ comment.pk }}">
+     
+            <form action="/post/{{post.pk}}/comment/{{comment.pk}}/reply" method="post">
+              {{ comment_form.as_p }}
+              {% csrf_token %}
+
+              <input class="btn btn-success" type="submit" value="Reply">
+            </form>
+          </div>
+        </div>
+        <br><br />
+        <hr>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}

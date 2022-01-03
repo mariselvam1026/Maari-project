@@ -1,0 +1,49 @@
+<!-- {% extends 'firstapp/base.html' %} {% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+        <h1>{% block title %} {{ post.title }} {% endblock title %}</h1>
+        <p class=" text-muted">Author {{ post.author }} |created_on {{ post.created_on }}</p>
+        <p class="card-text ">{{ post.content | safe }}</p>
+      </div>
+    </div>
+
+    {% block sidebar %} {% include 'firstapp/sidebar.html' %} {% endblock sidebar %}
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+
+
+
+<br>
+    <h2>Comments...</h2><br>
+    {% if not post.comments.all %}
+    No comments yet...<a href="{% url 'comment' post.pk%}">Add one</a>
+
+    {% else %}
+    <a href="{% url 'comment' post.pk%}">Add comment</a>
+    {% for comment in post.comments.all %}
+ <br/>
+     <strong><br>{{ comment.name }} | {{ comment.created}}</strong>
+
+  
+    <br/>comment - {{ comment.body }}
+    <br><br/><hr>
+    {% endfor %}
+    {% endif %}
+      </div></div></div></div>
+ 
+
+{% endblock content %} -->
+<select name="cars" id="cars">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
+</select>

@@ -1,0 +1,6 @@
+PS D:\user\projects\vaultpro> cd ../
+PS D:\user\projects> cd .\env\vaultenv\Scripts\
+PS D:\user\projects\env\vaultenv\Scripts> .\activate
+(vaultenv) PS D:\user\projects\env\vaultenv\Scripts> cd ../../../
+(vaultenv) PS D:\user\projects> cd .\vaultpro\
+(vaultenv) PS D:\user\projects\vaultpro>

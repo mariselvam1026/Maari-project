@@ -1,0 +1,60 @@
+{% extends 'firstapp/base2.html' %}
+{% block content %}
+
+<!-- <div class="rest"> -->
+
+<div class="container">
+  <div class="row">
+    <!-- <div class="col-md-4 col-md-offset-6"></div> -->
+    <div class="col-md-8 card mb-4  mt-5 left  top">
+      <div class="card-body">
+
+
+        <h1>Change password</h1>
+        <hr>
+
+        <form method="post" action="{% url 'changepassword' %}">
+          {% csrf_token %}
+          {{form.as_p}}
+          <input type="submit" value="change" class="btn btn-primary">
+          <!-- <a href="/home"><button type="submit" class="btn btn-success">Back</button></a> -->
+        </form>
+
+
+        <!-- <form class="gg" method="POST" action="{% url 'changepassword' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="Old password" class="form-label">Old password</label>
+            <input type="text" class="form-control" id="oldpassword" aria-describedby="oldpassword" name="oldpassword">
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Enter new Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+          </div>
+          <div class="mb-3">
+            <label for="confirmpassword" class="form-label">Enter Confirm new password</label>
+            <input type="confirmpassword" class="form-control" id="confirmpassword" name="confirmpassword">
+          </div> -->
+
+          <!-- {% if error %}
+          {{ error }}
+          <br />
+          <br />
+          {% endif %}
+          <button type="submit" class="btn btn-primary">Submit</button>
+
+          <a href="">Forget password</a> -->
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+</div>
+{% endblock content %}

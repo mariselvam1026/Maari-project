@@ -1,0 +1,22 @@
+<html>
+{% extends 'demoapp/base.html' %}
+{%block content %}
+<div class="container">
+    <h1>UPDATE DETAILS HERE</h1>
+    <form method="POST">
+        <div class="rest">
+            <div class="abc">
+                Employe name :<input type="text" name="name" value="{{employee.name}}"><br></div>
+            <div class="bca">
+                Employe age :<input type="text" name="age" value="{{employee.age}}"><br></div>
+            <div class="cab">
+                Employe salary :<input type="text" name="salary" value="{{employee.salary}}"><br></div>
+            {% csrf_token %}
+            <button class="button button3">Update</button></a>
+    </form>
+
+    {% endblock %}
+</div>
+</div>
+
+</html>
